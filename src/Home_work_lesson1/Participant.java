@@ -5,4 +5,5 @@ public interface Participant {
     void jumpInfo();
     void run (Track track);
     void jump (Wall wall);
+    public boolean succes();
 }

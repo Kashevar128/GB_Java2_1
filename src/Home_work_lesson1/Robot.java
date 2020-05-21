@@ -4,6 +4,7 @@ public class Robot implements Participant {
     private String name;
     private int runLimit;
     private int jumpLimit;
+    private boolean wellDone = true;
 
     public Robot(String name, int runLimit, int jumpLimit) {
         this.name = name;
@@ -21,12 +22,12 @@ public class Robot implements Participant {
 
     @Override
     public void runInfo() {
-        System.out.println("Робот побежал и смог пробежать " + runLimit + " метров");
+        System.out.println("Робот может пробежать " + runLimit + " метров");
     }
 
     @Override
     public void jumpInfo() {
-        System.out.println("Робот подпрыгнул на " + jumpLimit + " метров");
+        System.out.println("Робот может подпрыгнуть на " + jumpLimit + " метров");
     }
 
     @Override
@@ -36,6 +37,7 @@ public class Robot implements Participant {
         }
         else {
             System.out.println("Робот не смог пробежать дистанцию");
+            wellDone = false;
         }
     }
 
@@ -46,6 +48,11 @@ public class Robot implements Participant {
         }
         else {
             System.out.println("Робот не смог перепрыгнуть стену");
+            wellDone = false;
         }
+    }
+
+    public boolean succes() {
+        return wellDone;
     }
 }

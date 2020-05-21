@@ -4,6 +4,7 @@ public class Human implements Participant {
     private String name;
     private int runLimit;
     private int jumpLimit;
+    private boolean wellDone = true;
 
     public Human(String name, int runLimit, int jumpLimit) {
         this.name = name;
@@ -13,12 +14,12 @@ public class Human implements Participant {
 
     @Override
     public void runInfo() {
-        System.out.println("Человек побежал и смог пробежать " + runLimit + " метров" );
+        System.out.println("Человек может пробежать " + runLimit + " метров" );
     }
 
     @Override
     public void jumpInfo() {
-        System.out.println("Человек подпрыгнул на " + jumpLimit + " метров");
+        System.out.println("Человек может подпрыгнуть на " + jumpLimit + " метров");
     }
 
     @Override
@@ -28,6 +29,7 @@ public class Human implements Participant {
         }
         else {
             System.out.println("Человек не смог пробежать дистанцию");
+            wellDone = false;
         }
     }
 
@@ -38,7 +40,12 @@ public class Human implements Participant {
         }
         else {
             System.out.println("Человек не смог перепрыгнуть стену");
+            wellDone = false;
         }
+    }
+
+    public boolean succes() {
+        return wellDone;
     }
 }
 

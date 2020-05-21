@@ -4,6 +4,7 @@ public class Cat implements Participant {
     private String name;
     private int runLimit;
     private int jumpLimit;
+    private boolean wellDone = true;
 
     public Cat (String name, int runLimit, int jumpLimit) {
         this.name = name;
@@ -13,12 +14,12 @@ public class Cat implements Participant {
 
     @Override
     public void runInfo() {
-        System.out.println("Кот побежал и смог пробежать " + runLimit + " метров" );
+        System.out.println("Кот может пробежать " + runLimit + " метров" );
     }
 
     @Override
     public void jumpInfo() {
-        System.out.println("Кот подпрыгнул на " + jumpLimit + " метров");
+        System.out.println("Кот может подпрыгнуть на " + jumpLimit + " метров");
     }
 
     @Override
@@ -28,6 +29,7 @@ public class Cat implements Participant {
         }
         else {
             System.out.println("Кот не смог пробежать дистанцию");
+            wellDone = false;
         }
     }
 
@@ -38,6 +40,11 @@ public class Cat implements Participant {
         }
         else {
             System.out.println("Кот не смог перепрыгнуть стену");
+            wellDone = false;
         }
+    }
+
+    public boolean succes() {
+        return wellDone;
     }
 }
