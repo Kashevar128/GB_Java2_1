@@ -1,4 +1,4 @@
-package com.geekbrains.java2.lesson8;
+package src.Home_Work_Lesson_8.lesson8;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,6 +11,7 @@ public class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private String name;
+    private boolean flag;
 
     public String getName() {
         return name;
@@ -23,7 +24,8 @@ public class ClientHandler {
         try {
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
-            new Thread(()-> {
+            new Thread(() -> {
+                flag = false;
                 try {
                     authenticate();
                     readMessages();
@@ -52,7 +54,7 @@ public class ClientHandler {
 
     private void readMessages() throws IOException {
         while (true) {
-            if (in.available()>0) {
+            if (in.available() > 0) {
                 String message = in.readUTF();
                 System.out.println("From " + name + ":" + message);
                 if (message.equals("/end")) {
@@ -60,15 +62,32 @@ public class ClientHandler {
                 }
                 if (message.startsWith("/w ")) {
                     String[] parts = message.split("\\s");
-                    myServer.sendDirect(parts[1],name+ ": "+ parts[2]);
+                    myServer.sendDirect(parts[1], name + ": " + parts[2]);
                 } else myServer.broadcast(name + ": " + message);
             }
         }
     }
 
     private void authenticate() throws IOException {
-        while(true) {
-            if (in.available()>0){
+        new Thread(() -> {
+            long a = System.currentTimeMillis();
+            while(true) {
+                System.currentTimeMillis();
+                long b = System.currentTimeMillis() - a;
+                System.out.println("Отсчет до конца авторизации клиента: " + b);
+                if(b > 120000 && flag == false) {
+                    closeConnection();
+                    System.out.println("Authorization time has expired and the user is disabled");
+                    break;
+                }
+                if (flag == true) {
+                    break;
+                }
+            }
+        }).start();
+        while (true) {
+            if (in.available() > 0) {
+                flag = true;
                 String str = in.readUTF();
                 if (str.startsWith("/auth")) {
                     String[] parts = str.split("\\s");
