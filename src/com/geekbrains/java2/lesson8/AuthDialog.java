@@ -31,7 +31,6 @@ public class AuthDialog implements Stageable {
     PasswordField userPassword;
 
     public void submitUserPassword(ActionEvent actionEvent) {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("AuthDialog.fxml"));
         try {
             socket = ChatSceneApp.getScenes().get(SceneFlow.CHAT).getSocket();
             DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -48,6 +47,7 @@ public class AuthDialog implements Stageable {
                     }
                 }
             }
+            stage.setTitle("Chat as " + ChatSceneApp.getScenes().get(SceneFlow.CHAT).getNick());
             stage.setScene(ChatSceneApp.getScenes().get(SceneFlow.CHAT).getScene());
         } catch (IOException ex) {
             ex.printStackTrace();
